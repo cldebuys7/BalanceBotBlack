@@ -1,0 +1,200 @@
+login as: ubuntu
+Ubuntu 14.04.5 LTS
+ubuntu@192.168.7.2's password:
+Welcome to Ubuntu 14.04.5 LTS (GNU/Linux 4.1.30-ti-rt-r70 armv7l)
+
+ * Documentation:  https://help.ubuntu.com/
+Last login: Fri Feb 12 03:31:51 2016 from 192.168.1.101
+ubuntu@arm:~$ ls
+ClassProject  bin  slots  wifi-reset
+ubuntu@arm:~$ cd ClassProject/
+ubuntu@arm:~/ClassProject$ ls
+Kalman.cpp       boneDeviceTree          dtc.sh     startup.sh
+Kalman.h         bone_meen652-00A0.dtbo  eigenlib   startup.sh.save
+PWMtest          bone_meen652-00A0.dts   eigentest  vfslib
+bb.org-overlays  cmake_project           kalmanlib
+ubuntu@arm:~/ClassProject$ cp startup.sh UpdatedStartup.sh
+ubuntu@arm:~/ClassProject$ ls
+Kalman.cpp         bb.org-overlays         cmake_project  kalmanlib
+Kalman.h           boneDeviceTree          dtc.sh         startup.sh
+PWMtest            bone_meen652-00A0.dtbo  eigenlib       startup.sh.save
+UpdatedStartup.sh  bone_meen652-00A0.dts   eigentest      vfslib
+ubuntu@arm:~/ClassProject$ nano UpdatedStartup.sh
+ubuntu@arm:~/ClassProject$
+ubuntu@arm:~/ClassProject$
+ubuntu@arm:~/ClassProject$
+ubuntu@arm:~/ClassProject$
+ubuntu@arm:~/ClassProject$ cd /
+ubuntu@arm:/$ ls
+ID.txt                     dev   lost+found    opt   sbin  uEnv.txt
+System Volume Information  etc   media         proc  srv   usr
+bin                        home  mnt           root  sys   var
+boot                       lib   nfs-uEnv.txt  run   tmp
+ubuntu@arm:/$ cd /sys
+ubuntu@arm:/sys$ ls
+block  bus  class  dev  devices  firmware  fs  kernel  module  power
+ubuntu@arm:/sys$ cd devices/
+ubuntu@arm:/sys/devices$ ls
+armv7_cortex_a8  platform  software  tracepoint
+breakpoint       soc0      system    virtual
+ubuntu@arm:/sys/devices$ cd platform/
+ubuntu@arm:/sys/devices/platform$ ls
+alarmtimer        leds            pmu           serial8250
+bone_capemgr      ocp             power         snd-soc-dummy
+cpufreq-voltdm.0  omap-pcm-audio  reg-dummy     soc
+fixedregulator@0  pm33xx.0        regulatory.0  uevent
+ubuntu@arm:/sys/devices/platform$ cd ocp/
+ubuntu@arm:/sys/devices/platform/ocp$ ls
+40300000.ocmcram  480c8000.mailbox               4c000000.emif
+44e07000.gpio     480ca000.spinlock              53100000.sham
+44e09000.serial   4819c000.i2c                   53500000.aes
+44e0b000.i2c      481a0000.spi                   56000000.sgx
+44e35000.wdt      481ac000.gpio                  driver_override
+44e3e000.rtc      481ae000.gpio                  modalias
+47400000.usb      481d8000.mmc                   ocp:l4_wkup@44c00000
+48030000.spi      48200000.interrupt-controller  ocp:pinmux_eqep1
+48038000.mcasp    48302000.epwmss                ocp:pinmux_eqep2
+4803c000.mcasp    48304000.epwmss                ocp:pinmux_gpio
+48042000.timer    48310000.rng                   ocp:pinmux_pwm1
+48044000.timer    49000000.edma                  ocp:pinmux_pwm2
+48046000.timer    49800000.tptc                  of_node
+48048000.timer    49900000.tptc                  power
+4804a000.timer    49a00000.tptc                  subsystem
+4804c000.gpio     4a100000.ethernet              uevent
+48060000.mmc      4a300000.pruss
+ubuntu@arm:/sys/devices/platform/ocp$ cd 48302000.epwmss/
+ubuntu@arm:/sys/devices/platform/ocp/48302000.epwmss$ ls
+48302180.eqep    driver           modalias  power      uevent
+48302200.ehrpwm  driver_override  of_node   subsystem
+ubuntu@arm:/sys/devices/platform/ocp/48302000.epwmss$ cd 483022
+-bash: cd: 483022: No such file or directory
+ubuntu@arm:/sys/devices/platform/ocp/48302000.epwmss$ cd 48302200.ehrpwm/
+ubuntu@arm:/sys/devices/platform/ocp/48302000.epwmss/48302200.ehrpwm$ ls
+driver  driver_override  modalias  of_node  power  pwm  subsystem  uevent
+ubuntu@arm:/sys/devices/platform/ocp/48302000.epwmss/48302200.ehrpwm$ sudo -s
+[sudo] password for ubuntu:
+root@arm:/sys/devices/platform/ocp/48302000.epwmss/48302200.ehrpwm# ls
+driver  driver_override  modalias  of_node  power  pwm  subsystem  uevent
+root@arm:/sys/devices/platform/ocp/48302000.epwmss/48302200.ehrpwm# cd pwm/
+root@arm:/sys/devices/platform/ocp/48302000.epwmss/48302200.ehrpwm/pwm# ls
+pwmchip2
+root@arm:/sys/devices/platform/ocp/48302000.epwmss/48302200.ehrpwm/pwm# cd pwmchip2/
+root@arm:/sys/devices/platform/ocp/48302000.epwmss/48302200.ehrpwm/pwm/pwmchip2#
+ ls
+device  export  npwm  power  subsystem  uevent  unexport
+root@arm:/sys/devices/platform/ocp/48302000.epwmss/48302200.ehrpwm/pwm/pwmchip2#
+ echo 0 > export
+root@arm:/sys/devices/platform/ocp/48302000.epwmss/48302200.ehrpwm/pwm/pwmchip2#
+ ls
+device  export  npwm  power  pwm0  subsystem  uevent  unexport
+root@arm:/sys/devices/platform/ocp/48302000.epwmss/48302200.ehrpwm/pwm/pwmchip2#
+ cd pwm0
+root@arm:/sys/devices/platform/ocp/48302000.epwmss/48302200.ehrpwm/pwm/pwmchip2/
+pwm0# ls
+duty_cycle  enable  period  polarity  power  uevent
+root@arm:/sys/devices/platform/ocp/48302000.epwmss/48302200.ehrpwm/pwm/pwmchip2/
+pwm0# cat period
+0
+root@arm:/sys/devices/platform/ocp/48302000.epwmss/48302200.ehrpwm/pwm/pwmchip2/
+pwm0# 0
+bash: 0: command not found
+root@arm:/sys/devices/platform/ocp/48302000.epwmss/48302200.ehrpwm/pwm/pwmchip2/
+pwm0#
+root@arm:/sys/devices/platform/ocp/48302000.epwmss/48302200.ehrpwm/pwm/pwmchip2/
+pwm0#
+root@arm:/sys/devices/platform/ocp/48302000.epwmss/48302200.ehrpwm/pwm/pwmchip2/
+pwm0#
+root@arm:/sys/devices/platform/ocp/48302000.epwmss/48302200.ehrpwm/pwm/pwmchip2/
+pwm0# ls
+duty_cycle  enable  period  polarity  power  uevent
+root@arm:/sys/devices/platform/ocp/48302000.epwmss/48302200.ehrpwm/pwm/pwmchip2/
+pwm0# echo 100000 > period
+root@arm:/sys/devices/platform/ocp/48302000.epwmss/48302200.ehrpwm/pwm/pwmchip2/
+pwm0# echo 50000 > duty_cycle
+root@arm:/sys/devices/platform/ocp/48302000.epwmss/48302200.ehrpwm/pwm/pwmchip2/
+pwm0# echo 1 > enable
+root@arm:/sys/devices/platform/ocp/48302000.epwmss/48302200.ehrpwm/pwm/pwmchip2/
+pwm0# cd ..
+root@arm:/sys/devices/platform/ocp/48302000.epwmss/48302200.ehrpwm/pwm/pwmchip2#
+ ls
+device  export  npwm  power  pwm0  subsystem  uevent  unexport
+root@arm:/sys/devices/platform/ocp/48302000.epwmss/48302200.ehrpwm/pwm/pwmchip2#
+ cd ..
+root@arm:/sys/devices/platform/ocp/48302000.epwmss/48302200.ehrpwm/pwm# ls
+pwmchip2
+root@arm:/sys/devices/platform/ocp/48302000.epwmss/48302200.ehrpwm/pwm# cd ..
+root@arm:/sys/devices/platform/ocp/48302000.epwmss/48302200.ehrpwm# ls
+driver  driver_override  modalias  of_node  power  pwm  subsystem  uevent
+root@arm:/sys/devices/platform/ocp/48302000.epwmss/48302200.ehrpwm# ls
+driver  driver_override  modalias  of_node  power  pwm  subsystem  uevent
+root@arm:/sys/devices/platform/ocp/48302000.epwmss/48302200.ehrpwm# cd pwm/
+root@arm:/sys/devices/platform/ocp/48302000.epwmss/48302200.ehrpwm/pwm# ls
+pwmchip2
+root@arm:/sys/devices/platform/ocp/48302000.epwmss/48302200.ehrpwm/pwm# cd pwmchip2/
+root@arm:/sys/devices/platform/ocp/48302000.epwmss/48302200.ehrpwm/pwm/pwmchip2#
+ ls
+device  export  npwm  power  pwm0  subsystem  uevent  unexport
+root@arm:/sys/devices/platform/ocp/48302000.epwmss/48302200.ehrpwm/pwm/pwmchip2#
+ echo 1 > export
+root@arm:/sys/devices/platform/ocp/48302000.epwmss/48302200.ehrpwm/pwm/pwmchip2#
+ ls
+device  export  npwm  power  pwm0  pwm1  subsystem  uevent  unexport
+root@arm:/sys/devices/platform/ocp/48302000.epwmss/48302200.ehrpwm/pwm/pwmchip2#
+ cd pwm1
+root@arm:/sys/devices/platform/ocp/48302000.epwmss/48302200.ehrpwm/pwm/pwmchip2/
+pwm1# ls
+duty_cycle  enable  period  polarity  power  uevent
+root@arm:/sys/devices/platform/ocp/48302000.epwmss/48302200.ehrpwm/pwm/pwmchip2/
+pwm1#
+root@arm:/sys/devices/platform/ocp/48302000.epwmss/48302200.ehrpwm/pwm/pwmchip2/
+pwm1#
+root@arm:/sys/devices/platform/ocp/48302000.epwmss/48302200.ehrpwm/pwm/pwmchip2/
+pwm1#
+root@arm:/sys/devices/platform/ocp/48302000.epwmss/48302200.ehrpwm/pwm/pwmchip2/
+pwm1# echo 100000 > period
+root@arm:/sys/devices/platform/ocp/48302000.epwmss/48302200.ehrpwm/pwm/pwmchip2/
+pwm1# echo 20000 >  duty_cycle
+root@arm:/sys/devices/platform/ocp/48302000.epwmss/48302200.ehrpwm/pwm/pwmchip2/
+pwm1# echo 1 > enable
+root@arm:/sys/devices/platform/ocp/48302000.epwmss/48302200.ehrpwm/pwm/pwmchip2/
+pwm1# /48302000.epwmss/48302200.ehrpwm/pwm/pwmchip2/
+bash: /48302000.epwmss/48302200.ehrpwm/pwm/pwmchip2/: No such file or directory
+root@arm:/sys/devices/platform/ocp/48302000.epwmss/48302200.ehrpwm/pwm/pwmchip2/
+pwm1# pwm0#
+bash: pwm0#: command not found
+root@arm:/sys/devices/platform/ocp/48302000.epwmss/48302200.ehrpwm/pwm/pwmchip2/
+pwm1# ls
+duty_cycle  enable  period  polarity  power  uevent
+root@arm:/sys/devices/platform/ocp/48302000.epwmss/48302200.ehrpwm/pwm/pwmchip2/
+pwm1# cd ..
+root@arm:/sys/devices/platform/ocp/48302000.epwmss/48302200.ehrpwm/pwm/pwmchip2#
+ cd ..
+root@arm:/sys/devices/platform/ocp/48302000.epwmss/48302200.ehrpwm/pwm# cd..
+bash: cd..: command not found
+root@arm:/sys/devices/platform/ocp/48302000.epwmss/48302200.ehrpwm/pwm# cd ..
+root@arm:/sys/devices/platform/ocp/48302000.epwmss/48302200.ehrpwm# ls
+driver  driver_override  modalias  of_node  power  pwm  subsystem  uevent
+root@arm:/sys/devices/platform/ocp/48302000.epwmss/48302200.ehrpwm# cd ..
+root@arm:/sys/devices/platform/ocp/48302000.epwmss# ls
+48302180.eqep    driver           modalias  power      uevent
+48302200.ehrpwm  driver_override  of_node   subsystem
+root@arm:/sys/devices/platform/ocp/48302000.epwmss# cd ..
+root@arm:/sys/devices/platform/ocp# ls
+40300000.ocmcram  480c8000.mailbox               4c000000.emif
+44e07000.gpio     480ca000.spinlock              53100000.sham
+44e09000.serial   4819c000.i2c                   53500000.aes
+44e0b000.i2c      481a0000.spi                   56000000.sgx
+44e35000.wdt      481ac000.gpio                  driver_override
+44e3e000.rtc      481ae000.gpio                  modalias
+47400000.usb      481d8000.mmc                   ocp:l4_wkup@44c00000
+48030000.spi      48200000.interrupt-controller  ocp:pinmux_eqep1
+48038000.mcasp    48302000.epwmss                ocp:pinmux_eqep2
+4803c000.mcasp    48304000.epwmss                ocp:pinmux_gpio
+48042000.timer    48310000.rng                   ocp:pinmux_pwm1
+48044000.timer    49000000.edma                  ocp:pinmux_pwm2
+48046000.timer    49800000.tptc                  of_node
+48048000.timer    49900000.tptc                  power
+4804a000.timer    49a00000.tptc                  subsystem
+4804c000.gpio     4a100000.ethernet              uevent
+48060000.mmc      4a300000.pruss
+root@arm:/sys/devices/platform/ocp#

@@ -1,0 +1,201 @@
+/*
+ * Copyright (C) 2017 Dr. Pilwon Hur
+ * revised from Nathaniel R. Lewis
+ *
+ *
+ * This program is free software; you can redistribute it and/or modify
+ * it under the terms of the GNU General Public License version 2 as
+ * published by the Free Software Foundation.
+ *
+ * Enable eQEP1 & 2, PWM 1 & 2, and setup GPIO on the Beaglebone White and Black
+ * eQEP1 may conflict with the HDMI.
+ * I recommend to disable HDMI first.
+ */
+/dts-v1/;
+/plugin/;
+
+
+/ {
+    compatible = "ti,beaglebone", "ti,beaglebone-black";
+
+    /* identification */
+    part-number = "bone_meen652";
+    version     = "00A0";
+
+    fragment@0 {
+        target = <&am33xx_pinmux>;
+        __overlay__ {
+
+            /* eQEP */
+            eqep2_default_pin: pinmux_eqep2_default_pin{
+                pinctrl-single,pins = <
+                    0x038 0x24  /* P8_16 = GPIO1_14 = EQEP2_index, MODE4 */
+                    0x03c 0x24  /* P8_15 = GPIO1_15 = EQEP2_strobe, MODE4 */
+                    0x030 0x34  /* P8_12 = GPIO1_12 = EQEP2A_in, MODE4 */
+                    0x034 0x34  /* P8_11 = GPIO1_13 = EQEP2B_in, MODE4 */
+                >;
+            };
+
+            eqep1_default_pin: pinmux_eqep1_default_pin{
+                pinctrl-single,pins = <
+                    0x0d8 0x22  /* P8_31 = GPIO0_10 = EQEP1_index, MODE2 */
+                    0x0dc 0x22  /* P8_32 = GPIO0_11 = EQEP1_strobe, MODE2 */
+                    0x0d4 0x32  /* P8_33 = GPIO0_9 = EQEP1B_in, MODE2 */
+                    0x0d0 0x32  /* P8_35 = GPIO0_8 = EQEP1A_in, MODE2 */
+
+                >;
+            };
+
+
+            /* PWM */
+            pwm2_default_pin: pinmux_pwm2_default_pin{
+                pinctrl-single,pins = <
+                    0x020 0x04 /* P8_19 = GPIO0_22, mode 4 is ehrpwm2A. */
+                    0x024 0x04 /* P8_13 = GPIO0_23, mode 4 is ehrpwm2B. */
+                >;
+            };
+
+            pwm1_default_pin: pinmux_pwm1_default_pin{
+                pinctrl-single,pins = <
+                    0x048 0x06 /* P9_14 = GPIO1_18, mode 6 is ehrpwm1A. */
+                    0x04c 0x06 /* P9_16 = GPIO1_19, mode 6 is ehrpwm1B. */
+                >;
+            };
+
+            /* GPIO */
+            GPIO_default_pin: pinmux_GPIO_default_pin{
+                pinctrl-single,pins = <
+                    0x070 0x07  /* P9_11 GPIO0_30 OUTPUT MODE7 - The LED Output */
+                    0x074 0x07  /* P9_13 GPIO0_31 OUTPUT MODE7 - The LED Output */
+                    0x15c 0x07  /* P9_17 GPIO0_5 OUTPUT MODE7 - The LED Output */
+                    0x158 0x07  /* P9_18 GPIO0_4 OUTPUT MODE7 - The LED Output */
+
+                    0x154 0x3f  /* P9_21 GPIO0_3 INPUT MODE7 none - The Button Input */
+                    0x150 0x3f  /* P9_22 GPIO0_2 INPUT MODE7 none - The Button Input */
+                    0x184 0x3f  /* P9_24 GPIO0_15 INPUT MODE7 none - The Button Input */
+                    0x180 0x3f  /* P9_26 GPIO0_14 INPUT MODE7 none - The Button Input */
+
+
+                    /* 0x034 0x37  P8_11 45 INPUT MODE7 pullup - Yellow Wire */
+                    /* 0x030 0x27  P8_12 44 INPUT MODE7 pulldown - Green Wire */
+                    /* 0x024 0x2f  P8_13 23 INPUT MODE7 none - White Wire */
+
+
+                    /* OUTPUT GPIO(mode7) 0x07 pulldown, 0x17 pullup, 0x?f no pullup/down */
+                    /* INPUT GPIO(mode7) 0x27 pulldown, 0x37 pullup, 0x?f no pullup/down */
+
+
+                    /* From: https://groups.google.com/forum/#!searchin/beagleboard/eQep/beagleboard/Orp3tFcNgCc/mYacP_GkCQQJ */
+                >;
+            };
+        };
+    };
+
+    fragment@1 {
+        target = <&ocp>;
+            __overlay__ {
+
+            pinmux_gpio {
+                compatible = "bone-pinmux-helper";
+                pinctrl-names = "default";
+                pinctrl-0 = <&GPIO_default_pin>;
+                status = "okay";
+            };
+
+            pinmux_pwm2 {
+                compatible = "bone-pinmux-helper";
+                pinctrl-names = "default";
+                pinctrl-0 = <&pwm2_default_pin>;
+                status = "okay";
+            };
+
+            pinmux_pwm1 {
+                compatible = "bone-pinmux-helper";
+                pinctrl-names = "default";
+                pinctrl-0 = <&pwm1_default_pin>;
+                status = "okay";
+            };
+
+            pinmux_eqep2 {
+                compatible = "bone-pinmux-helper";
+                pinctrl-names = "default";
+                pinctrl-0 = <&eqep2_default_pin>;
+                status = "okay";
+            };
+
+            pinmux_eqep1 {
+                compatible = "bone-pinmux-helper";
+                pinctrl-names = "default";
+                pinctrl-0 = <&eqep1_default_pin>;
+                status = "okay";
+            };
+        };
+    };
+
+
+
+    fragment@2 {
+        target = <&epwmss2>;
+        __overlay__ {
+            status = "okay";
+        };
+    };
+
+    fragment@3 {
+        target = <&eqep2>;
+        __overlay__ {
+            pinctrl-names = "default";
+            pinctrl-0 = <&eqep2_default_pin>;
+            status = "okay";
+            count_mode = <0>;  /* 0 - Quadrature mode, normal 90 phase offset cha & chb.  1 - Direction mode.  cha input = clock, chb input$
+            swap_inputs = <0>; /* Are channel A and channel B swapped? (0 - no, 1 - yes) */
+            invert_qa = <1>;   /* Should we invert the channel A input?  */
+            invert_qb = <1>;   /* Should we invert the channel B input? I invert these because my encoder outputs drive transistors that pu$
+            invert_qi = <0>;   /* Should we invert the index input? */
+            invert_qs = <0>;   /* Should we invert the strobe input? */
+        };
+    };
+
+
+    fragment@4 {
+        target = <&ehrpwm2>;    // target PWM in the PWM subsystem2
+        __overlay__ {
+            pinctrl-names = "default";
+            pinctrl-0 = <&pwm2_default_pin>;
+            status = "okay";    // activate
+        };
+    };
+
+    fragment@5 {
+        target = <&epwmss1>;
+        __overlay__ {
+            status = "okay";
+        };
+    };
+
+    fragment@6 {
+        target = <&eqep1>;
+        __overlay__ {
+            pinctrl-names = "default";
+            pinctrl-0 = <&eqep1_default_pin>;
+            status = "okay";
+            count_mode = <0>;  /* 0 - Quadrature mode, normal 90 phase offset cha & chb.  1 - Direction mode.  cha input = clock, chb input$
+            swap_inputs = <0>; /* Are channel A and channel B swapped? (0 - no, 1 - yes) */
+            invert_qa = <1>;   /* Should we invert the channel A input?  */
+            invert_qb = <1>;   /* Should we invert the channel B input? I invert these because my encoder outputs drive transistors that pu$
+            invert_qi = <0>;   /* Should we invert the index input? */
+            invert_qs = <0>;   /* Should we invert the strobe input? */
+        };
+    };
+
+    fragment@7 {
+        target = <&ehrpwm1>;    // target PWM in the PWM subsystem1
+        __overlay__ {
+            pinctrl-names = "default";
+            pinctrl-0 = <&pwm1_default_pin>;
+            status = "okay";    // activate
+        };
+    };
+
+};
+

@@ -1,0 +1,73 @@
+login as: ubuntu
+Ubuntu 14.04.5 LTS
+ubuntu@192.168.1.123's password:
+Welcome to Ubuntu 14.04.5 LTS (GNU/Linux 4.1.30-ti-rt-r70 armv7l)
+
+ * Documentation:  https://help.ubuntu.com/
+Last login: Fri Feb 12 03:32:28 2016 from 192.168.7.1
+ubuntu@arm:~$
+ubuntu@arm:~$
+ubuntu@arm:~$
+ubuntu@arm:~$
+ubuntu@arm:~$
+ubuntu@arm:~$
+ubuntu@arm:~$
+ubuntu@arm:~$
+ubuntu@arm:~$ ls
+ClassProject  bin  slots  wifi-reset
+ubuntu@arm:~$ cd ClassProject/
+ubuntu@arm:~/ClassProject$ ls
+Kalman.cpp       boneDeviceTree          dtc.sh     startup.sh
+Kalman.h         bone_meen652-00A0.dtbo  eigenlib   startup.sh.save
+PWMtest          bone_meen652-00A0.dts   eigentest  vfslib
+bb.org-overlays  cmake_project           kalmanlib
+ubuntu@arm:~/ClassProject$ ./startup.sh
+[sudo] password for ubuntu:
+ 0: PF----  -1
+ 1: PF----  -1
+ 2: PF----  -1
+ 3: PF----  -1
+ 4: P-O-L-   0 Override Board Name,00A0,Override Manuf,bone_meen652
+ubuntu@arm:~/ClassProject$ sudo -s
+root@arm:~/ClassProject#
+root@arm:~/ClassProject#
+root@arm:~/ClassProject#
+root@arm:~/ClassProject#
+root@arm:~/ClassProject#
+root@arm:~/ClassProject#
+root@arm:~/ClassProject#
+root@arm:~/ClassProject#
+root@arm:~/ClassProject#
+root@arm:~/ClassProject# cd /sys
+root@arm:/sys# ls
+block  bus  class  dev  devices  firmware  fs  kernel  module  power
+root@arm:/sys# cd class/
+root@arm:/sys/class# ls
+ata_device   dma          ieee80211  mtd           rfkill       timed_output
+ata_link     drm          input      net           rtc          tty
+ata_port     extcon       iommu      pci_bus       scsi_device  udc
+backlight    gpio         leds       phy           scsi_disk    uio
+bdi          graphics     mbox       power_supply  scsi_host    usbmon
+block        hidraw       mdio_bus   pps           sound        vc
+bsg          hwmon        mem        ptp           spi_master   vtconsole
+devcoredump  i2c-adapter  misc       pwm           switch       watchdog
+devfreq      i2c-dev      mmc_host   regulator     thermal
+root@arm:/sys/class# cd gpio/
+root@arm:/sys/class/gpio# ls
+export  gpiochip0  gpiochip32  gpiochip64  gpiochip96  unexport
+root@arm:/sys/class/gpio# cd gpiochip0
+root@arm:/sys/class/gpio/gpiochip0# ls
+base  device  label  ngpio  power  subsystem  uevent
+root@arm:/sys/class/gpio/gpiochip0# cd ..
+root@arm:/sys/class/gpio# echo 50 > export
+root@arm:/sys/class/gpio# ls
+export  gpio50  gpiochip0  gpiochip32  gpiochip64  gpiochip96  unexport
+root@arm:/sys/class/gpio# cd gpio50
+root@arm:/sys/class/gpio/gpio50# ls
+active_low  device  direction  edge  power  subsystem  uevent  value
+root@arm:/sys/class/gpio/gpio50# cat direction
+in
+root@arm:/sys/class/gpio/gpio50# echo out > direction
+root@arm:/sys/class/gpio/gpio50# cat direction
+out
+root@arm:/sys/class/gpio/gpio50#
